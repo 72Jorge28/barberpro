@@ -1,7 +1,18 @@
 import { site } from "@/config/site";
 import { Container } from "@/components/ui/container";
+import type { Locale } from "@/i18n/locales";
 
-export function Footer() {
+type Props = {
+  locale: Locale;
+  t: (key: string) => string;
+};
+
+function withLocale(locale: Locale, href: string) {
+  if (href === "/") return `/${locale}`;
+  return `/${locale}${href}`;
+}
+
+export function Footer({ locale, t }: Props) {
   const year = new Date().getFullYear();
 
   return (
@@ -27,10 +38,10 @@ export function Footer() {
             {site.nav.items.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={withLocale(locale, item.href)}
                 className="text-[hsl(var(--muted-fg))] hover:text-[hsl(var(--fg))] transition"
               >
-                {item.label}
+                {t(item.labelKey)}
               </a>
             ))}
           </div>

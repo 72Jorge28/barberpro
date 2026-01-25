@@ -1,6 +1,7 @@
 /**
  * Buyer-editable file.
- * Change branding, business info, nav, links here (no components needed).
+ * Branding + business info + navigation structure.
+ * Text labels come from src/messages/*.json via labelKey.
  */
 export const site = {
   brand: {
@@ -25,13 +26,13 @@ export const site = {
   },
   nav: {
     items: [
-      { href: "/", label: "Home" },
-      { href: "/services", label: "Services" },
-      { href: "/pricing", label: "Pricing" },
-      { href: "/team", label: "Team" },
-      { href: "/gallery", label: "Gallery" },
-      { href: "/contact", label: "Contact" },
-      { href: "/blog", label: "Blog" }
+      { href: "/", labelKey: "nav.home" },
+      { href: "/services", labelKey: "nav.services" },
+      { href: "/pricing", labelKey: "nav.pricing" },
+      { href: "/team", labelKey: "nav.team" },
+      { href: "/gallery", labelKey: "nav.gallery" },
+      { href: "/contact", labelKey: "nav.contact" },
+      { href: "/blog", labelKey: "nav.blog" }
     ],
   },
 } as const;
