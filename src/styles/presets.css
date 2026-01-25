@@ -1,0 +1,64 @@
+/* presets.css
+   Presets activados por: <html data-theme="gold|classic|dark">
+*/
+
+:root[data-theme="classic"] {
+  --bg: 0 0% 100%;
+  --fg: 222 47% 11%;
+
+  --card: 0 0% 100%;
+  --card-fg: 222 47% 11%;
+
+  --muted: 210 40% 96%;
+  --muted-fg: 215 16% 47%;
+
+  --border: 214 32% 91%;
+  --ring: 221 83% 53%;
+
+  --primary: 221 83% 53%;
+  --primary-fg: 210 40% 98%;
+
+  --accent: 210 40% 96%;
+  --accent-fg: 222 47% 11%;
+}
+
+:root[data-theme="dark"] {
+  --bg: 222 47% 7%;
+  --fg: 210 40% 98%;
+
+  --card: 222 47% 9%;
+  --card-fg: 210 40% 98%;
+
+  --muted: 217 33% 16%;
+  --muted-fg: 215 20% 65%;
+
+  --border: 217 33% 18%;
+  --ring: 217 91% 60%;
+
+  --primary: 217 91% 60%;
+  --primary-fg: 222 47% 11%;
+
+  --accent: 217 33% 16%;
+  --accent-fg: 210 40% 98%;
+}
+
+:root[data-theme="gold"] {
+  /* Negro/Oro premium */
+  --bg: 225 15% 6%;
+  --fg: 45 70% 88%;
+
+  --card: 225 15% 9%;
+  --card-fg: 45 70% 88%;
+
+  --muted: 225 14% 14%;
+  --muted-fg: 45 25% 70%;
+
+  --border: 225 14% 18%;
+  --ring: 45 90% 55%;
+
+  --primary: 45 90% 55%;
+  --primary-fg: 225 15% 8%;
+
+  --accent: 225 14% 14%;
+  --accent-fg: 45 70% 88%;
+}
