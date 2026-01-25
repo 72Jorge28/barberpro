@@ -24,15 +24,14 @@ export const site = {
     instagram: "https://instagram.com/",
   },
   nav: {
-    // todavía sin i18n real: esto luego lo traducimos por messages
     items: [
-      { href: "/", labelKey: "nav.home" },
-      { href: "/services", labelKey: "nav.services" },
-      { href: "/pricing", labelKey: "nav.pricing" },
-      { href: "/team", labelKey: "nav.team" },
-      { href: "/gallery", labelKey: "nav.gallery" },
-      { href: "/contact", labelKey: "nav.contact" },
-      { href: "/blog", labelKey: "nav.blog" },
+      { href: "/", label: "Home" },
+      { href: "/services", label: "Services" },
+      { href: "/pricing", label: "Pricing" },
+      { href: "/team", label: "Team" },
+      { href: "/gallery", label: "Gallery" },
+      { href: "/contact", label: "Contact" },
+      { href: "/blog", label: "Blog" }
     ],
   },
 } as const;
