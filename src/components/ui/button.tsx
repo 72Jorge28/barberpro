@@ -1,3 +1,4 @@
+// src/components/ui/button.tsx
 import Link from "next/link";
 import type { ReactNode, ReactElement } from "react";
 
@@ -12,18 +13,15 @@ type CommonProps = {
 };
 
 type ButtonOnlyProps = CommonProps & {
-  href?: never; // <-- never, not undefined
-  onClick?: () => void;
-  type?: "button" | "submit";
-  disabled?: boolean;
-};
+  href?: never;
+} & Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    "className" | "children"
+  >;
 
 type LinkOnlyProps = CommonProps & {
-  href: string; // required
-  onClick?: never;
-  type?: never;
-  disabled?: never;
-};
+  href: string;
+} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "children" | "href">;
 
 type Props = ButtonOnlyProps | LinkOnlyProps;
 
@@ -64,18 +62,19 @@ export function Button(props: Props): ReactElement {
   const cls = cx(getClasses(variant, size), className);
 
   if (isLinkProps(props)) {
-    // here props.href is guaranteed string
+    const { href, ...rest } = props;
     return (
-      <Link href={props.href} className={cls}>
+      <Link href={href} className={cls} {...rest}>
         {children}
       </Link>
     );
   }
 
-  const { onClick, type = "button", disabled } = props;
+  // Button props
+  const { type = "button", ...rest } = props;
 
   return (
-    <button type={type} onClick={onClick} disabled={disabled} className={cls}>
+    <button type={type} className={cls} {...rest}>
       {children}
     </button>
   );
