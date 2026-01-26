@@ -5,5 +5,68 @@
   "nav.team": "Team",
   "nav.gallery": "Gallery",
   "nav.contact": "Contact",
-  "nav.blog": "Blog"
+  "nav.blog": "Blog",
+
+  "home.hero.badge": "Quick booking • Premium style",
+  "home.hero.title": "Premium cuts. Sharp style.",
+  "home.hero.subtitle": "A clean, modern experience ready to customize. Designed to turn visits into bookings.",
+  "home.hero.ctaPrimary": "Book now",
+  "home.hero.ctaSecondary": "View services",
+
+  "home.services.title": "Featured services",
+  "home.services.subtitle": "The essentials, presented with a premium look.",
+  "home.services.item1.title": "Cut + style",
+  "home.services.item1.desc": "Detailed, consistent finish for a sharp look.",
+  "home.services.item2.title": "Beard & line-up",
+  "home.services.item2.desc": "Clean lines, care, and precision in every detail.",
+  "home.services.item3.title": "Full experience",
+  "home.services.item3.desc": "Ambience, attention, and results—done right.",
+
+  "home.cta.title": "Ready for your next cut?",
+  "home.cta.subtitle": "Book in seconds via WhatsApp or connect your booking system.",
+  "home.cta.button": "Message on WhatsApp",
+
+  "home.hero.imageAlt": "BarberPro cover",
+  "home.hero.kicker": "Modern barbershop",
+
+  "home.stats.one.value": "+10",
+  "home.stats.one.label": "years",
+  "home.stats.two.value": "4.9★",
+  "home.stats.two.label": "reviews",
+  "home.stats.three.value": "100%",
+  "home.stats.three.label": "style",
+
+  "home.services.items.0.title": "Premium fade",
+  "home.services.items.0.desc": "Clean transitions and fine detail.",
+  "home.services.items.1.title": "Beard & line-up",
+  "home.services.items.1.desc": "Sharp lines with an elegant finish.",
+  "home.services.items.2.title": "Full package",
+  "home.services.items.2.desc": "Cut + beard + final styling.",
+
+  "home.gallery.title": "Gallery",
+  "home.gallery.subtitle": "Demo images (replaceable by the buyer).",
+  "home.gallery.imageAlt": "Gallery",
+
+  "home.cta.note": "Primary CTA can be connected to WhatsApp or Calendly.",
+  "home.cta.primary": "Book",
+
+  "nav.cta.whatsapp": "WhatsApp",
+  "nav.cta.booking": "Book",
+  "nav.lang.label": "Language",
+  "nav.lang.es": "Switch to Spanish",
+  "nav.lang.en": "Switch to English",
+  "nav.mobile.open": "Open menu",
+  "nav.mobile.close": "Close menu",
+
+  "footer.tagline": "Premium cuts. Sharp style.",
+  "footer.phoneLabel": "Phone:",
+  "footer.addressLabel": "Address:",
+  "footer.linksTitle": "Links",
+  "footer.hoursTitle": "Hours",
+  "footer.cta": "Book now",
+  "footer.rights": "All rights reserved.",
+  "footer.privacy": "Privacy",
+  "footer.terms": "Terms",
+  "footer.phone": "Phone:",
+  "footer.address": "Address:"
 }

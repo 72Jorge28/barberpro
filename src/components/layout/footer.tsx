@@ -1,18 +1,17 @@
-import { site } from "@/config/site";
-import { Container } from "@/components/ui/container";
-import type { Locale } from "@/i18n/locales";
+"use client";
 
-type Props = {
-  locale: Locale;
-  t: (key: string) => string;
-};
+import { site } from "@/config/site";
+import type { Locale } from "@/i18n/locales";
+import { useT } from "@/i18n/provider";
+import { Container } from "@/components/layout/container";
 
 function withLocale(locale: Locale, href: string) {
   if (href === "/") return `/${locale}`;
   return `/${locale}${href}`;
 }
 
-export function Footer({ locale, t }: Props) {
+export function Footer({ locale }: { locale: Locale }) {
+  const t = useT();
   const year = new Date().getFullYear();
 
   return (
@@ -24,12 +23,13 @@ export function Footer({ locale, t }: Props) {
             <p className="mt-2 text-sm text-[hsl(var(--muted-fg))]">
               {site.brand.slogan}
             </p>
+
             <p className="mt-4 text-sm">
-              <span className="text-[hsl(var(--muted-fg))]">Phone: </span>
+              <span className="text-[hsl(var(--muted-fg))]">{t("footer.phone")}: </span>
               <span>{site.business.phone}</span>
             </p>
             <p className="mt-1 text-sm">
-              <span className="text-[hsl(var(--muted-fg))]">Address: </span>
+              <span className="text-[hsl(var(--muted-fg))]">{t("footer.address")}: </span>
               <span>{site.business.address}</span>
             </p>
           </div>
@@ -48,7 +48,7 @@ export function Footer({ locale, t }: Props) {
         </div>
 
         <div className="mt-10 text-xs text-[hsl(var(--muted-fg))]">
-          © {year} {site.brand.name}. All rights reserved.
+          © {year} {site.brand.name}. {t("footer.rights")}
         </div>
       </Container>
     </footer>

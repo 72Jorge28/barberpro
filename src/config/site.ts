@@ -4,9 +4,22 @@
  * Text labels come from src/messages/*.json via labelKey.
  */
 export const site = {
+  /**
+   * Public base URL of the deployed site (no trailing slash).
+   * Used for canonical URLs, OpenGraph, Twitter cards, sitemap, and robots.txt.
+   * Example: "https://barberpro.vercel.app" or "https://www.yourdomain.com"
+   */
+  url: "https://example.com",
+
+  /**
+   * Default OpenGraph image path (must exist in /public).
+   * Recommended size: 1200x630.
+   */
+  ogImage: "/images/og.svg",
+  
   brand: {
     name: "BarberPro",
-    slogan: "Cortes premium. Estilo impecable.",
+    slogan: "Cortes premium. Estilo impecable. Confianza total.",
     logoText: "BarberPro",
   },
   business: {
@@ -24,6 +37,11 @@ export const site = {
     maps: "https://maps.google.com/",
     instagram: "https://instagram.com/",
   },
+  features: {
+    blog: {
+      enabled: true, // buyer can disable blog easily
+    },
+  },
   nav: {
     items: [
       { href: "/", labelKey: "nav.home" },
@@ -32,7 +50,7 @@ export const site = {
       { href: "/team", labelKey: "nav.team" },
       { href: "/gallery", labelKey: "nav.gallery" },
       { href: "/contact", labelKey: "nav.contact" },
-      { href: "/blog", labelKey: "nav.blog" }
+      { href: "/blog", labelKey: "nav.blog" },
     ],
   },
 } as const;

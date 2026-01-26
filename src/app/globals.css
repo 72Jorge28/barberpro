@@ -1,10 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "../styles/tokens.css";
 @import "../styles/presets.css";
 
+@tailwind utilities;
+
+/* Color-scheme según preset */
 :root {
   color-scheme: light;
 }
@@ -14,17 +15,56 @@
   color-scheme: dark;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
   background: hsl(var(--bg));
   color: hsl(var(--fg));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Focus visible básico (accesibilidad) */
+/* Links por defecto (suaves, no azul feo) */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Focus visible (accesibilidad) */
 :focus-visible {
   outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
+}
+
+/* Premium background helpers */
+.bg-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.bg-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(1200px 600px at 20% 0%, hsla(var(--accent), 0.18), transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, hsla(var(--accent), 0.10), transparent 55%),
+    radial-gradient(700px 500px at 50% 100%, rgba(255, 255, 255, 0.04), transparent 55%);
+}
+
+.bg-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.18;
+  mask-image: radial-gradient(600px 400px at 50% 0%, black 40%, transparent 75%);
 }

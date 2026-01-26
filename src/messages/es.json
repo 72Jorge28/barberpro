@@ -5,5 +5,69 @@
   "nav.team": "Equipo",
   "nav.gallery": "Galería",
   "nav.contact": "Contacto",
-  "nav.blog": "Blog"
+  "nav.blog": "Blog",
+
+  "home.hero.badge": "Agenda rápida • Estilo premium",
+  "home.hero.title": "Cortes premium. Estilo impecable.",
+  "home.hero.subtitle": "Una experiencia limpia, moderna y lista para personalizar. Pensada para convertir visitas en reservas.",
+  "home.hero.ctaPrimary": "Reservar ahora",
+  "home.hero.ctaSecondary": "Ver servicios",
+
+  "home.services.title": "Servicios principales",
+  "home.services.subtitle": "Lo esencial, presentado con un look premium.",
+  "home.services.item1.title": "Corte + estilo",
+  "home.services.item1.desc": "Acabado detallado y consistente, para un look elegante.",
+  "home.services.item2.title": "Barba & perfilado",
+  "home.services.item2.desc": "Líneas limpias, cuidado y precisión en cada detalle.",
+  "home.services.item3.title": "Experiencia completa",
+  "home.services.item3.desc": "Ambiente, atención y resultado final a nivel premium.",
+
+  "home.cta.title": "¿Listo para tu próximo corte?",
+  "home.cta.subtitle": "Reserva en segundos desde WhatsApp o conecta tu sistema de booking.",
+  "home.cta.button": "Hablar por WhatsApp",
+
+  "home.hero.imageAlt": "BarberPro portada",
+  "home.hero.kicker": "Barbería moderna",
+
+  "home.stats.one.value": "+10",
+  "home.stats.one.label": "años",
+  "home.stats.two.value": "4.9★",
+  "home.stats.two.label": "reseñas",
+  "home.stats.three.value": "100%",
+  "home.stats.three.label": "estilo",
+
+  "home.services.items.0.title": "Fade premium",
+  "home.services.items.0.desc": "Transiciones limpias y detalle fino.",
+  "home.services.items.1.title": "Barba & perfilado",
+  "home.services.items.1.desc": "Líneas precisas, acabado elegante.",
+  "home.services.items.2.title": "Paquete completo",
+  "home.services.items.2.desc": "Corte + barba + estilo final.",
+
+  "home.gallery.title": "Galería",
+  "home.gallery.subtitle": "Imágenes demo (reemplazables por el comprador).",
+  "home.gallery.imageAlt": "Galería",
+
+  "home.cta.note": "CTA principal conectable a WhatsApp o Calendly.",
+  "home.cta.primary": "Reservar",
+
+  "nav.cta.whatsapp": "WhatsApp",
+  "nav.cta.booking": "Reservar",
+  "nav.lang.label": "Idioma",
+  "nav.lang.es": "Cambiar a español",
+  "nav.lang.en": "Cambiar a inglés",
+  "nav.mobile.open": "Abrir menú",
+  "nav.mobile.close": "Cerrar menú",
+
+  "footer.tagline": "Cortes premium. Estilo impecable.",
+  "footer.phoneLabel": "Teléfono:",
+  "footer.addressLabel": "Dirección:",
+  "footer.linksTitle": "Enlaces",
+  "footer.hoursTitle": "Horario",
+  "footer.cta": "Reservar ahora",
+  "footer.rights": "Todos los derechos reservados.",
+  "footer.privacy": "Privacidad",
+  "footer.terms": "Términos",
+  "footer.phone": "Teléfono:",
+  "footer.address": "Dirección:"
+  
 }

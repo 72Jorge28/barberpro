@@ -8,5 +8,7 @@ export async function getMessages(locale: Locale): Promise<Messages> {
       return (await import("@/messages/es.json")).default as Messages;
     case "en":
       return (await import("@/messages/en.json")).default as Messages;
+    default:
+      return {};
   }
 }

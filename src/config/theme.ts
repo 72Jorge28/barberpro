@@ -2,8 +2,14 @@
  * Buyer-editable file.
  * Pick a preset by changing ONE line: activePreset.
  */
+enum ThemePresets {
+  classic = "classic",
+  dark = "dark",
+  gold = "gold",
+}
+
 export const theme = {
-  activePreset: "gold", // classic | dark | gold
+  activePreset: ThemePresets.gold, // classic | dark | gold
   fonts: {
     // Next/font will use these later (we'll wire it in the next step).
     heading: "Montserrat",

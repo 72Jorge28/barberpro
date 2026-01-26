@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { ReactNode, ReactElement } from "react";
 
 type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md";
@@ -11,16 +11,21 @@ type CommonProps = {
   size?: Size;
 };
 
-type ButtonProps = CommonProps & {
-  href?: never;
+type ButtonOnlyProps = CommonProps & {
+  href?: never; // <-- never, not undefined
   onClick?: () => void;
   type?: "button" | "submit";
   disabled?: boolean;
 };
 
-type LinkProps = CommonProps & {
-  href: string;
+type LinkOnlyProps = CommonProps & {
+  href: string; // required
+  onClick?: never;
+  type?: never;
+  disabled?: never;
 };
+
+type Props = ButtonOnlyProps | LinkOnlyProps;
 
 function cx(...parts: Array<string | undefined | false>) {
   return parts.filter(Boolean).join(" ");
@@ -50,19 +55,16 @@ function getClasses(variant: Variant, size: Size) {
   return cx(base, sizes[size], variants[variant]);
 }
 
-export function Button(props: ButtonProps): JSX.Element;
-export function Button(props: LinkProps): JSX.Element;
-export function Button(props: ButtonProps | LinkProps): JSX.Element {
-  const {
-    children,
-    className,
-    variant = "primary",
-    size = "md",
-  } = props;
+function isLinkProps(p: Props): p is LinkOnlyProps {
+  return typeof (p as LinkOnlyProps).href === "string";
+}
 
+export function Button(props: Props): ReactElement {
+  const { children, className, variant = "primary", size = "md" } = props;
   const cls = cx(getClasses(variant, size), className);
 
-  if ("href" in props) {
+  if (isLinkProps(props)) {
+    // here props.href is guaranteed string
     return (
       <Link href={props.href} className={cls}>
         {children}
