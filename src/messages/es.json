@@ -50,6 +50,15 @@
   "home.cta.note": "CTA principal conectable a WhatsApp o Calendly.",
   "home.cta.primary": "Reservar",
 
+  "home.hero.bullet1": "Confirmación por WhatsApp en minutos.",
+  "home.hero.bullet2": "Barberos expertos + detalles finos.",
+  "home.hero.bullet3": "Diseño listo para convertir visitas en reservas.",
+
+  "home.cta.whatsapp": "WhatsApp",
+  "home.cta.bullets.0": "Confirmación rápida",
+  "home.cta.bullets.1": "Cancelación fácil",
+  "home.cta.bullets.2": "Atención por WhatsApp",
+
   "nav.cta.whatsapp": "WhatsApp",
   "nav.cta.booking": "Reservar",
   "nav.lang.label": "Idioma",

@@ -49,6 +49,15 @@
 
   "home.cta.note": "Primary CTA can be connected to WhatsApp or Calendly.",
   "home.cta.primary": "Book",
+  
+  "home.hero.bullet1": "WhatsApp confirmation in minutes.",
+  "home.hero.bullet2": "Skilled barbers + fine details.",
+  "home.hero.bullet3": "Built to turn visits into bookings.",
+
+  "home.cta.whatsapp": "WhatsApp",
+  "home.cta.bullets.0": "Quick confirmation",
+  "home.cta.bullets.1": "Easy cancellation",
+  "home.cta.bullets.2": "Support via WhatsApp",
 
   "nav.cta.whatsapp": "WhatsApp",
   "nav.cta.booking": "Book",
