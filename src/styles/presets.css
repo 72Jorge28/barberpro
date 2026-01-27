@@ -1,25 +1,40 @@
 /* presets.css
-   Presets activados por: <html data-theme="gold|classic|dark">
+   Presets activados por: <html data-theme="gold|classic|dark|violet">
 */
 
+/* ✅ CLASSIC arreglado: menos "blanco plano", mejores separaciones */
 :root[data-theme="classic"] {
-  --bg: 0 0% 100%;
+  /* Base */
+  --bg: 210 20% 98%;      /* off-white suave (no blanco puro) */
   --fg: 222 47% 11%;
 
+  /* Cards */
   --card: 0 0% 100%;
   --card-fg: 222 47% 11%;
 
-  --muted: 210 40% 96%;
-  --muted-fg: 215 16% 47%;
+  /* Muted / surfaces */
+  --muted: 210 22% 94%;   /* más contraste que antes */
+  --muted-fg: 215 18% 38%;
 
-  --border: 214 32% 91%;
+  /* Borders (más visibles) */
+  --border: 214 22% 86%;
   --ring: 221 83% 53%;
 
+  /* Acciones */
   --primary: 221 83% 53%;
   --primary-fg: 210 40% 98%;
 
-  --accent: 210 40% 96%;
+  --accent: 210 22% 94%;
   --accent-fg: 222 47% 11%;
+
+  --shell: 0 0% 100%;
+
+  --shadow-sm: 0 1px 2px hsl(222 47% 11% / 0.06);
+  --shadow-md: 0 14px 32px hsl(222 47% 11% / 0.10);
+  --shadow-lg: 0 28px 80px hsl(222 47% 11% / 0.14);
+
+  --glow: 0 0 0 hsl(221 83% 53% / 0);
+
 }
 
 :root[data-theme="dark"] {
@@ -40,6 +55,15 @@
 
   --accent: 217 33% 16%;
   --accent-fg: 210 40% 98%;
+
+  --shell: 222 47% 9%;
+
+  --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.35);
+  --shadow-md: 0 16px 44px hsl(0 0% 0% / 0.45);
+  --shadow-lg: 0 30px 90px hsl(0 0% 0% / 0.55);
+
+  --glow: 0 0 0 hsl(217 91% 60% / 0);
+
 }
 
 :root[data-theme="gold"] {
@@ -56,9 +80,57 @@
   --border: 225 14% 18%;
   --ring: 45 90% 55%;
 
-  --primary: 42 75% 48%;     /* oro más elegante, menos saturado */
-  --primary-fg: 225 15% 10%; /* texto oscuro fuerte */
+  --primary: 42 75% 48%;
+  --primary-fg: 225 15% 10%;
 
   --accent: 225 14% 14%;
   --accent-fg: 45 70% 88%;
+
+  --shell: 225 15% 9%;
+
+  --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.35);
+  --shadow-md: 0 18px 60px hsl(0 0% 0% / 0.50);
+  --shadow-lg: 0 34px 110px hsl(0 0% 0% / 0.60);
+
+  --glow: 0 22px 80px hsl(45 90% 55% / 0.12);
+
+}
+
+/* ✅ NUEVO: VIOLET (como la referencia: dark + purple accent) */
+:root[data-theme="violet"] {
+  /* Base */
+  --bg: 240 10% 7%;        /* casi negro, con tinte violeta */
+  --fg: 240 10% 96%;
+
+  /* Cards (gris oscuro premium) */
+  --card: 240 9% 11%;
+  --card-fg: 240 10% 96%;
+
+  /* Surfaces */
+  --muted: 240 7% 16%;
+  --muted-fg: 240 6% 70%;
+
+  /* Borders visibles pero elegantes */
+  --border: 240 7% 20%;
+
+  /* Ring / glow */
+  --ring: 270 95% 65%;
+
+  /* Primary (botones) */
+  --primary: 270 90% 60%;     /* violeta vibrante */
+  --primary-fg: 0 0% 100%;
+
+  /* Accent (chips / secondary buttons) */
+  --accent: 240 7% 16%;
+  --accent-fg: 240 10% 96%;
+
+  --shell: 240 9% 11%;
+
+  --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.35);
+  --shadow-md: 0 18px 60px hsl(0 0% 0% / 0.55);
+  --shadow-lg: 0 36px 120px hsl(0 0% 0% / 0.70);
+
+  /* Glow violeta estilo “neon premium” */
+  --glow: 0 26px 90px hsl(270 95% 65% / 0.18);
+
 }

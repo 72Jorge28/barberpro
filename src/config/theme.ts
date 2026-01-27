@@ -6,12 +6,12 @@ enum ThemePresets {
   classic = "classic",
   dark = "dark",
   gold = "gold",
+  violet = "violet", // NEW
 }
 
 export const theme = {
-  activePreset: ThemePresets.gold, // classic | dark | gold
+  activePreset: ThemePresets.gold, // classic | dark | gold | violet
   fonts: {
-    // Next/font will use these later (we'll wire it in the next step).
     heading: "Montserrat",
     body: "Inter",
   },

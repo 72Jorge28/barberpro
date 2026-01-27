@@ -1,3 +1,4 @@
+// src/components/layout/section.tsx
 import type { ReactNode } from "react";
 import { Container } from "@/components/layout/container";
 

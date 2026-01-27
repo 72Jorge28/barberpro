@@ -1,6 +1,6 @@
-// src/app/[locale]/page.tsx
+// src/app/[locale]/page.tsx  (tu Home está bien; lo dejo igual, solo consistente con safeLocale)
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/locales";
+import { isLocale, type Locale } from "@/i18n/locales";
 import { getMessages } from "@/i18n/getMessages";
 import { createT } from "@/i18n/t";
 
@@ -17,15 +17,16 @@ export default async function HomePage({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const messages = await getMessages(locale);
+  const safeLocale = locale as Locale;
+  const messages = await getMessages(safeLocale);
   const t = createT(messages);
 
   return (
     <main>
-      <HomeHero locale={locale} t={t} />
+      <HomeHero locale={safeLocale} t={t} />
       <HomeServices t={t} />
       <HomeGallery t={t} />
-      <HomeCta locale={locale} t={t} />
+      <HomeCta locale={safeLocale} t={t} />
     </main>
   );
 }

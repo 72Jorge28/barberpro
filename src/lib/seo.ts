@@ -22,7 +22,7 @@ function absoluteUrl(path: string) {
 
 export function buildMetadata(input: SeoInput): Metadata {
   const url = absoluteUrl(input.path);
-  const ogImage = absoluteUrl(input.ogImagePath || site.ogImage || "/images/og.jpg");
+  const ogImage = absoluteUrl(input.ogImagePath || site.seo.ogImage || "/images/og.jpg");
 
   const title = `${input.title} | ${site.brand.name}`;
   const description = input.description;

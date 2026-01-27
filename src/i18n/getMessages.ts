@@ -1,3 +1,4 @@
+// src/i18n/getMessages.ts
 import type { Locale } from "./locales";
 
 export type Messages = Record<string, string>;

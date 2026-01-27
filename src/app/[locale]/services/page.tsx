@@ -1,16 +1,31 @@
-import { Section } from "@/components/layout/section";
-import { Card } from "@/components/ui/card";
+// src/app/[locale]/services/page.tsx
+import { notFound } from "next/navigation";
+import { isLocale, type Locale } from "@/i18n/locales";
+import { getMessages } from "@/i18n/getMessages";
+import { createT } from "@/i18n/t";
 
-export default function Page() {
+import { ServicesHero } from "@/blocks/services/hero";
+import { ServicesCategories } from "@/blocks/services/categories";
+import { ServicesFaq } from "@/blocks/services/faq";
+import { ServicesCta } from "@/blocks/services/cta";
+
+export default async function ServicesPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+
+  const messages = await getMessages(locale as Locale);
+  const t = createT(messages);
+
   return (
     <main>
-      <Section title="Coming soon" subtitle="Stub page (will be localized next).">
-        <Card className="p-6">
-          <p className="text-sm text-[hsl(var(--muted-fg))]">
-            Replace this with real content later.
-          </p>
-        </Card>
-      </Section>
+      <ServicesHero locale={locale as Locale} t={t} />
+      <ServicesCategories t={t} />
+      <ServicesFaq t={t} />
+      <ServicesCta locale={locale as Locale} t={t} />
     </main>
   );
 }
