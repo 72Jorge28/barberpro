@@ -19,8 +19,8 @@ export function Footer({ locale }: { locale: Locale }) {
   const t = useT();
   const year = new Date().getFullYear();
 
-  // Footer premium: pocos links (si quieres, puedes limitar a 5)
-  const nav = site.nav.items.slice(0, 5);
+  // // Footer premium: pocos links (si quieres, puedes limitar a 5)
+  // const nav = site.nav.items.slice(0, 5);
 
   return (
     <footer className="relative border-t border-[hsl(var(--border))]">
@@ -84,7 +84,7 @@ export function Footer({ locale }: { locale: Locale }) {
           {/* Right: links + hours (compact) */}
           <div className="grid gap-6 sm:grid-cols-2 sm:gap-10">
             {/* Links */}
-            <div>
+            {/* <div>
               <div className="text-xs font-medium text-[hsl(var(--fg))]">
                 {t("footer.linksTitle")}
               </div>
@@ -104,7 +104,7 @@ export function Footer({ locale }: { locale: Locale }) {
                   </Link>
                 ))}
               </nav>
-            </div>
+            </div> */}
 
             {/* Hours (solo resumen) */}
             <div>

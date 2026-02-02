@@ -5,26 +5,20 @@ import { HeroShell } from "@/components/blocks/hero/hero-shell";
 
 type TFunction = (key: string, vars?: Record<string, string | number>) => string;
 
-function toSafeLocale(locale: Locale | undefined | null): Locale {
-  return locale === "en" ? "en" : "es";
-}
-
 export function ServicesHero({ locale, t }: { locale: Locale; t: TFunction }) {
-  const safeLocale = toSafeLocale(locale);
-
   return (
     <HeroShell
-      locale={safeLocale}
+      locale={locale}
       imageSrc={site.media.heroServices}
       imageAlt={t("services.hero.imageAlt")}
       badgeText={t("services.hero.badge")}
-      kickerText={`${t("services.hero.kicker")} • ${safeLocale.toUpperCase()}`}
+      kickerText={`${t("services.hero.kicker")} • ${locale.toUpperCase()}`}
       title={t("services.hero.title")}
       subtitle={t("services.hero.subtitle")}
       ctas={[
-        { label: t("services.hero.ctaPrimary"), href: `/${safeLocale}/booking`, variant: "primary" },
+        { label: t("services.hero.ctaPrimary"), href: `/${locale}/booking`, variant: "primary" },
         { label: t("services.hero.ctaSecondary"), href: site.links.whatsapp, variant: "secondary" },
-        { label: t("services.hero.ctaTertiary"), href: `/${safeLocale}/contact`, variant: "ghost" },
+        { label: t("services.hero.ctaTertiary"), href: `/${locale}/contact`, variant: "ghost" },
       ]}
       pills={[
         t("services.hero.pills.0"),
@@ -43,7 +37,7 @@ export function ServicesHero({ locale, t }: { locale: Locale; t: TFunction }) {
           { value: t("services.hero.stats.1.value"), label: t("services.hero.stats.1.label") },
           { value: t("services.hero.stats.2.value"), label: t("services.hero.stats.2.label") },
         ],
-        cta: { label: t("services.hero.sideCta"), href: `/${safeLocale}/booking`, variant: "secondary" },
+        cta: { label: t("services.hero.sideCta"), href: `/${locale}/booking`, variant: "secondary" },
       }}
     />
   );

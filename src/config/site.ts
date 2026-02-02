@@ -15,8 +15,15 @@ export const site = {
   // SEO (structural)
   // ---------------------------------------------------------------------------
   seo: {
-    ogImage: "/images/og.svg", // must exist in /public
-    twitterHandle: "@yourhandle", // optional
+    // Used for Next metadataBase and canonical URLs.
+    siteName: "BarberPro",
+    // Optional default description key (copy lives in messages)
+    descriptionKey: "seo.defaultDescription",
+    ogImage: "/images/og.svg",
+    twitter: {
+      handle: "@yourhandle",
+      card: "summary_large_image" as const,
+    },
   },
 
   // ---------------------------------------------------------------------------
@@ -26,7 +33,7 @@ export const site = {
   brand: {
     name: "BarberPro",
     logoText: "BarberPro",
-    slogan: "Cortes premium. Estilo impecable. Confianza total.",
+    sloganKey: "brand.slogan",
   },
 
   // ---------------------------------------------------------------------------
@@ -37,9 +44,9 @@ export const site = {
     address: "123 Main St, City, Country",
     email: "hello@barberpro.com",
     hours: [
-      { day: "Mon–Fri", time: "9:00–18:00" },
-      { day: "Sat", time: "10:00–16:00" },
-      { day: "Sun", time: "Closed" },
+      { dayKey: "hours.mon_fri", timeKey: "hours.mon_fri_time" },
+      { dayKey: "hours.sat", timeKey: "hours.sat_time" },
+      { dayKey: "hours.sun", timeKey: "hours.closed" },
     ],
   },
 
@@ -48,13 +55,12 @@ export const site = {
   // ---------------------------------------------------------------------------
   links: {
     whatsapp: "https://wa.me/10000000000",
-    whatsappMessage:
-      "https://wa.me/10000000000?text=Hola%2C%20quiero%20hacer%20una%20consulta.",
     calendly: "https://calendly.com/",
     maps: "https://maps.google.com/",
     instagram: "https://instagram.com/",
     facebook: "https://facebook.com/",
   },
+
 
   // ---------------------------------------------------------------------------
   // Feature flags (buyer friendly)
@@ -91,6 +97,15 @@ export const site = {
         { src: "/images/demo/gallery/05.jpg", altKey: "gallery.items.4.title" },
         { src: "/images/demo/gallery/06.jpg", altKey: "gallery.items.5.title" },
       ],
+    },
+  },
+
+  ornaments: {
+    enabled: true,
+    defaultOpacity: 0.10,
+    assets: {
+      corner: "/ornaments/corner-01.svg",
+      flourish: "/ornaments/flourish-01.svg",
     },
   },
 

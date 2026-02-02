@@ -9,23 +9,23 @@ import { ServicesCategories } from "@/blocks/services/categories";
 import { ServicesFaq } from "@/blocks/services/faq";
 import { ServicesCta } from "@/blocks/services/cta";
 
-export default async function ServicesPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+type Params = { locale: string } | Promise<{ locale: string }>;
+
+export default async function ServicesPage({ params }: { params: Params }) {
+  const { locale } = await Promise.resolve(params);
   if (!isLocale(locale)) notFound();
 
-  const messages = await getMessages(locale as Locale);
+  const safeLocale: Locale = locale;
+
+  const messages = await getMessages(safeLocale);
   const t = createT(messages);
 
   return (
     <main>
-      <ServicesHero locale={locale as Locale} t={t} />
+      <ServicesHero locale={safeLocale} t={t} />
       <ServicesCategories t={t} />
       <ServicesFaq t={t} />
-      <ServicesCta locale={locale as Locale} t={t} />
+      <ServicesCta locale={safeLocale} t={t} />
     </main>
   );
 }

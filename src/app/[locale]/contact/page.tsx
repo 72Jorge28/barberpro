@@ -3,12 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { site } from "@/config/site";
-import { isLocale } from "@/i18n/locales";
+import { isLocale, type Locale } from "@/i18n/locales";
 import { getMessages } from "@/i18n/getMessages";
 import { createT } from "@/i18n/t";
 
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
+
+type Params = { locale: string } | Promise<{ locale: string }>;
 
 type SocialId = "whatsapp" | "instagram" | "facebook";
 
@@ -49,16 +51,19 @@ function FacebookIcon({ className }: { className?: string }) {
   );
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export default async function Page({ params }: { params: Params }) {
+  const { locale } = await Promise.resolve(params);
   if (!isLocale(locale)) notFound();
 
-  const messages = await getMessages(locale);
+  const safeLocale: Locale = locale;
+
+  const messages = await getMessages(safeLocale);
   const t = createT(messages);
+
+  // ✅ hours is structural in site.ts (dayKey/timeKey)
+  const hoursText = site.business.hours
+    .map((h) => `${t(h.dayKey)}: ${t(h.timeKey)}`)
+    .join(" · ");
 
   const socials: SocialItem[] = [
     {
@@ -87,19 +92,12 @@ export default async function Page({
     },
   ];
 
-  const hoursText = site.business.hours
-    .map((h) => `${h.day}: ${h.time}`)
-    .join(" · ");
-
-  const whatsappHref =
-    site.links.whatsappMessage ??
-    site.links.whatsapp;
+  const whatsappHref = site.links.whatsapp;
 
   return (
     <main>
-      {/* Header (premium, consistente con tu look) */}
       <section className="border-b border-[hsl(var(--border))] bg-[hsl(var(--bg))]">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
+        <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
           <p className="text-xs uppercase tracking-[0.25em] text-[hsl(var(--muted-fg))]">
             {t("contact.page.kicker")}
           </p>
@@ -114,8 +112,11 @@ export default async function Page({
         </div>
       </section>
 
-      <Section title={t("contact.section.title")} subtitle={t("contact.section.subtitle")} className="py-10 sm:py-12">
-        {/* Social icons */}
+      <Section
+        title={t("contact.section.title")}
+        subtitle={t("contact.section.subtitle")}
+        className="py-10 sm:py-12"
+      >
         <div className="flex flex-wrap items-center justify-center gap-3">
           {socials.map((s) => {
             const label = t(s.labelKey);
@@ -141,16 +142,12 @@ export default async function Page({
           })}
         </div>
 
-        {/* Info card */}
-        <article className="relative mt-8 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] shadow-[var(--shadow-sm)] overflow-hidden">
-          {/* Decorative bar */}
+        <article className="relative mt-8 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] shadow-[var(--shadow-sm)]">
           <span className="pointer-events-none absolute inset-y-0 left-0 w-1.5 bg-[hsl(var(--ring))]/80" />
-
-          {/* subtle glow */}
           <div className="pointer-events-none absolute -top-28 -right-28 h-72 w-72 rounded-full bg-[hsl(var(--ring))]/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-28 -left-28 h-72 w-72 rounded-full bg-[hsl(var(--primary))]/10 blur-3xl" />
 
-          <div className="relative p-6 sm:p-8 pl-8 space-y-4">
+          <div className="relative space-y-4 p-6 pl-8 sm:p-8">
             <div>
               <h2 className="text-2xl font-semibold tracking-tight text-[hsl(var(--fg))]">
                 {t("contact.card.title")}
@@ -167,18 +164,21 @@ export default async function Page({
                 </span>{" "}
                 {site.business.address}
               </li>
+
               <li>
                 <span className="font-semibold text-[hsl(var(--fg))]">
                   {t("contact.lines.hoursLabel")}
                 </span>{" "}
                 {hoursText}
               </li>
+
               <li>
                 <span className="font-semibold text-[hsl(var(--fg))]">
                   {t("contact.lines.phoneLabel")}
                 </span>{" "}
                 {site.business.phone}
               </li>
+
               {site.business.email ? (
                 <li>
                   <span className="font-semibold text-[hsl(var(--fg))]">
@@ -190,25 +190,19 @@ export default async function Page({
             </ul>
 
             <div className="flex flex-wrap gap-3 pt-2">
-              <Button
-                href={whatsappHref}
-                variant="primary"
-                className="w-full sm:w-auto"
-              >
+              <Button href={whatsappHref} variant="primary" className="w-full sm:w-auto">
                 {t("contact.cta.whatsapp")}
               </Button>
 
               <Link
                 className="inline-flex items-center justify-center rounded-full border border-[hsl(var(--border))] bg-transparent px-6 py-2 text-sm font-medium text-[hsl(var(--fg))] hover:bg-[hsl(var(--muted))]"
-                href={`/${locale}/gallery`}
+                href={`/${safeLocale}/gallery`}
               >
                 {t("contact.cta.gallery")}
               </Link>
             </div>
 
-            <p className="text-xs text-[hsl(var(--muted-fg))]">
-              {t("contact.note")}
-            </p>
+            <p className="text-xs text-[hsl(var(--muted-fg))]">{t("contact.note")}</p>
           </div>
         </article>
       </Section>

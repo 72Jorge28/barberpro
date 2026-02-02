@@ -8,26 +8,20 @@ type Props = {
   t: (key: string) => string;
 };
 
-function toSafeLocale(locale: Locale | undefined | null): Locale {
-  return locale === "en" ? "en" : "es";
-}
-
 export function HomeHero({ locale, t }: Props) {
-  const safeLocale = toSafeLocale(locale);
-
   return (
     <HeroShell
-      locale={safeLocale}
+      locale={locale}
       imageSrc={site.media.heroHome}
       imageAlt={t("home.hero.imageAlt")}
       badgeText={t("home.hero.badge")}
-      kickerText={`${t("home.hero.kicker")} • ${safeLocale.toUpperCase()}`}
+      kickerText={`${t("home.hero.kicker")} • ${locale.toUpperCase()}`}
       title={site.brand.name}
       subtitle={t("home.hero.subtitle")}
       ctas={[
-        { label: t("home.hero.ctaPrimary"), href: `/${safeLocale}/booking`, variant: "primary" },
-        { label: t("home.hero.ctaSecondary"), href: `/${safeLocale}/services`, variant: "secondary" },
-        { label: "Instagram", href: site.links.instagram, variant: "ghost" },
+        { label: t("home.hero.ctaPrimary"), href: `/${locale}/booking`, variant: "primary" },
+        { label: t("home.hero.ctaSecondary"), href: `/${locale}/services`, variant: "secondary" },
+        { label: t("common.instagram"), href: site.links.instagram, variant: "ghost" },
       ]}
       pills={[
         `${t("home.stats.one.value")} ${t("home.stats.one.label")}`,

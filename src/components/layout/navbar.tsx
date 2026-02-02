@@ -2,16 +2,24 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { site } from "@/config/site";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
-import type { Locale } from "@/i18n/locales";
-import { locales } from "@/i18n/locales";
+import { locales, type Locale } from "@/i18n/locales";
 import { useT } from "@/i18n/provider";
 
 function cx(...parts: Array<string | undefined | false>) {
   return parts.filter(Boolean).join(" ");
+}
+
+function withLocale(locale: Locale, href: string) {
+  return href === "/" ? `/${locale}` : `/${locale}${href}`;
+}
+
+function buildWhatsAppLink(base: string, message: string) {
+  const sep = base.includes("?") ? "&" : "?";
+  return `${base}${sep}text=${encodeURIComponent(message)}`;
 }
 
 export function Navbar({ locale }: { locale: Locale }) {
@@ -23,9 +31,6 @@ export function Navbar({ locale }: { locale: Locale }) {
 
   const currentPath = pathname ?? `/${locale}`;
 
-  const withLocale = (nextLocale: Locale, href: string) =>
-    href === "/" ? `/${nextLocale}` : `/${nextLocale}${href}`;
-
   const switchLocaleHref = (nextLocale: Locale) => {
     const parts = currentPath.split("/");
     parts[1] = nextLocale;
@@ -34,10 +39,9 @@ export function Navbar({ locale }: { locale: Locale }) {
   };
 
   const isActive = (href: string) => {
-    const target = withLocale(locale, href);
     if (!pathname) return false;
     if (href === "/") return pathname === `/${locale}`;
-    return pathname.startsWith(target);
+    return pathname.startsWith(withLocale(locale, href));
   };
 
   function closeAll() {
@@ -45,26 +49,65 @@ export function Navbar({ locale }: { locale: Locale }) {
     setLangOpen(false);
   }
 
+  // Close menus on Escape (premium UX)
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeAll();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Optional: lock scroll when mobile drawer open
+  useEffect(() => {
+    if (!open) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [open]);
+
+  // Filter items based on enabled + feature flags
+  const navItems = useMemo(() => {
+    return site.nav.items
+      .filter((it) => it.enabled)
+      .filter((it) => (it.href === "/blog" ? site.features.blog.enabled : true));
+  }, []);
+
+  const bookingHref = withLocale(locale, site.nav.cta.href);
+  const bookingEnabled = site.nav.cta.enabled;
+
+  const whatsappHref = useMemo(() => {
+    // message lives in i18n
+    const msg = t("nav.cta.whatsappMessage");
+    return buildWhatsAppLink(site.links.whatsapp, msg);
+  }, [t]);
+
   const desktopCtas = useMemo(
     () => (
       <>
         <Button
-          href={site.links.whatsapp}
+          href={whatsappHref}
           variant="secondary"
           className="hidden sm:inline-flex"
         >
           {t("nav.cta.whatsapp")}
         </Button>
-        <Button
-          href={`/${locale}/booking`}
-          variant="primary"
-          className="hidden sm:inline-flex"
-        >
-          {t("nav.cta.booking")}
-        </Button>
+
+        {bookingEnabled && (
+          <Button
+            href={bookingHref}
+            variant={site.nav.cta.variant}
+            className="hidden sm:inline-flex"
+          >
+            {t(site.nav.cta.labelKey)}
+          </Button>
+        )}
       </>
     ),
-    [locale, t]
+    [bookingEnabled, bookingHref, t, whatsappHref]
   );
 
   return (
@@ -82,7 +125,7 @@ export function Navbar({ locale }: { locale: Locale }) {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-4 text-sm">
-            {site.nav.items.map((it) => {
+            {navItems.map((it) => {
               const href = withLocale(locale, it.href);
               const active = isActive(it.href);
 
@@ -161,7 +204,7 @@ export function Navbar({ locale }: { locale: Locale }) {
               setOpen((v) => !v);
               setLangOpen(false);
             }}
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t("common.closeMenu") : t("common.openMenu")}
             aria-expanded={open}
           >
             {open ? "✕" : "☰"}
@@ -174,7 +217,7 @@ export function Navbar({ locale }: { locale: Locale }) {
         <div className="md:hidden">
           {/* backdrop */}
           <button
-            aria-label="Close menu"
+            aria-label={t("common.closeMenu")}
             className="fixed inset-0 z-40 bg-black/40"
             onClick={closeAll}
           />
@@ -203,7 +246,7 @@ export function Navbar({ locale }: { locale: Locale }) {
 
               {/* Nav items */}
               <div className="flex flex-col">
-                {site.nav.items.map((it) => {
+                {navItems.map((it) => {
                   const href = withLocale(locale, it.href);
                   const active = isActive(it.href);
 
@@ -228,7 +271,7 @@ export function Navbar({ locale }: { locale: Locale }) {
               {/* Mobile CTAs */}
               <div className="grid grid-cols-2 gap-2">
                 <Link
-                  href={site.links.whatsapp}
+                  href={whatsappHref}
                   onClick={closeAll}
                   className={cx(
                     "h-11 px-4 text-sm font-semibold rounded-[var(--radius-sm)] inline-flex items-center justify-center",
@@ -238,16 +281,18 @@ export function Navbar({ locale }: { locale: Locale }) {
                   {t("nav.cta.whatsapp")}
                 </Link>
 
-                <Link
-                  href={`/${locale}/booking`}
-                  onClick={closeAll}
-                  className={cx(
-                    "h-11 px-4 text-sm font-semibold rounded-[var(--radius-sm)] inline-flex items-center justify-center",
-                    "bg-[hsl(var(--primary))] text-[hsl(var(--primary-fg))] hover:opacity-95 transition"
-                  )}
-                >
-                  {t("nav.cta.booking")}
-                </Link>
+                {bookingEnabled && (
+                  <Link
+                    href={bookingHref}
+                    onClick={closeAll}
+                    className={cx(
+                      "h-11 px-4 text-sm font-semibold rounded-[var(--radius-sm)] inline-flex items-center justify-center",
+                      "bg-[hsl(var(--primary))] text-[hsl(var(--primary-fg))] hover:opacity-95 transition"
+                    )}
+                  >
+                    {t(site.nav.cta.labelKey)}
+                  </Link>
+                )}
               </div>
             </Container>
           </div>

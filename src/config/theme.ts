@@ -2,15 +2,11 @@
  * Buyer-editable file.
  * Pick a preset by changing ONE line: activePreset.
  */
-enum ThemePresets {
-  classic = "classic",
-  dark = "dark",
-  gold = "gold",
-  violet = "violet", // NEW
-}
+export const themePresets = ["classic", "dark", "gold", "violet"] as const;
+export type ThemePreset = (typeof themePresets)[number];
 
 export const theme = {
-  activePreset: ThemePresets.gold, // classic | dark | gold | violet
+  activePreset: "gold" as ThemePreset, // classic | dark | gold | violet
   fonts: {
     heading: "Montserrat",
     body: "Inter",
@@ -29,4 +25,3 @@ export const theme = {
 } as const;
 
 export type ThemeConfig = typeof theme;
-export type ThemePreset = ThemeConfig["activePreset"];

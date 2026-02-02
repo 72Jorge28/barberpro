@@ -1,3 +1,4 @@
+// src/app/[locale]/blog/[slug]/page.tsx
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -12,7 +13,8 @@ import { getBlogFrontmatter, getAllBlogSlugs } from "@/lib/blog";
 
 export const dynamicParams = false;
 
-type ParamsPromise = Promise<{ locale: string; slug: string }>;
+type ParamsObj = { locale: string; slug: string };
+type Params = ParamsObj | Promise<ParamsObj>;
 
 export function generateStaticParams(): Array<{ locale: Locale; slug: string }> {
   const all: Array<{ locale: Locale; slug: string }> = [];
@@ -27,12 +29,8 @@ export function generateStaticParams(): Array<{ locale: Locale; slug: string }> 
   return all;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: ParamsPromise;
-}): Promise<Metadata> {
-  const { locale, slug } = await params;
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { locale, slug } = await Promise.resolve(params);
   if (!isLocale(locale)) return {};
 
   if (!site.features.blog.enabled) {
@@ -65,20 +63,18 @@ export async function generateMetadata({
   });
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: ParamsPromise;
-}) {
-  const { locale, slug } = await params;
+export default async function BlogPostPage({ params }: { params: Params }) {
+  const { locale, slug } = await Promise.resolve(params);
   if (!isLocale(locale)) notFound();
+
+  const safeLocale: Locale = locale;
 
   if (!site.features.blog.enabled) notFound();
 
-  const post = getPostBySlug(locale as Locale, slug);
+  const post = getPostBySlug(safeLocale, slug);
   if (!post) notFound();
 
-  const mod = await import(`@/content/blog/${locale}/${slug}.mdx`);
+  const mod = await import(`@/content/blog/${safeLocale}/${slug}.mdx`);
   const Content = mod.default;
 
   return (

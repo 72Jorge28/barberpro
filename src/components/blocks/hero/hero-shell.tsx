@@ -19,7 +19,8 @@ type RightPanel = {
 };
 
 type Props = {
-  locale: Locale;
+  // ✅ Allow unknown to prevent runtime crashes
+  locale?: unknown;
 
   imageSrc: string;
   imageAlt: string;
@@ -34,9 +35,8 @@ type Props = {
   rightPanel?: RightPanel;
 };
 
-function toSafeLocale(locale: Locale | undefined | null): Locale {
-  // Si en tu app soportas más locales, ajusta esto.
-  return locale === "en" ? "en" : "es";
+function toSafeLocale(input: unknown): Locale {
+  return input === "en" ? "en" : "es";
 }
 
 export function HeroShell({
@@ -90,9 +90,9 @@ export function HeroShell({
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                {ctas.slice(0, 3).map((c) => (
+                {ctas.slice(0, 3).map((c, idx) => (
                   <Button
-                    key={c.href + c.label}
+                    key={`${idx}-${c.href}-${c.label}`}
                     href={c.href}
                     variant={c.variant ?? "primary"}
                     className="w-full sm:w-auto"
@@ -104,9 +104,9 @@ export function HeroShell({
 
               {pills?.length ? (
                 <div className="mt-8 flex flex-wrap gap-2">
-                  {pills.slice(0, 6).map((txt) => (
+                  {pills.slice(0, 6).map((txt, idx) => (
                     <span
-                      key={txt}
+                      key={`pill-${idx}`}
                       className="rounded-full border border-white/15 bg-black/25 px-3 py-1 text-xs text-white/80 backdrop-blur"
                     >
                       {txt}
@@ -124,8 +124,8 @@ export function HeroShell({
                   </div>
 
                   <ul className="mt-3 space-y-2 text-sm text-white/75">
-                    {rightPanel.bullets.slice(0, 5).map((b) => (
-                      <li key={b} className="flex gap-2">
+                    {rightPanel.bullets.slice(0, 5).map((b, idx) => (
+                      <li key={`bullet-${idx}`} className="flex gap-2">
                         <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[hsl(var(--ring))]" />
                         {b}
                       </li>
@@ -134,9 +134,9 @@ export function HeroShell({
 
                   {rightPanel.stats?.length ? (
                     <div className="mt-5 grid grid-cols-3 gap-2">
-                      {rightPanel.stats.slice(0, 3).map((s) => (
+                      {rightPanel.stats.slice(0, 3).map((s, idx) => (
                         <div
-                          key={s.value + s.label}
+                          key={`stat-${idx}`}
                           className="rounded-xl border border-white/10 bg-black/25 p-3 text-center"
                         >
                           <div className="text-white font-semibold">{s.value}</div>
