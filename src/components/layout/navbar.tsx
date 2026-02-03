@@ -56,7 +56,6 @@ export function Navbar({ locale }: { locale: Locale }) {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Optional: lock scroll when mobile drawer open

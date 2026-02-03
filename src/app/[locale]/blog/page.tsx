@@ -1,7 +1,7 @@
 // src/app/[locale]/blog/page.tsx
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import { locales, isLocale, type Locale } from "@/i18n/locales";
 import { site } from "@/config/site";
@@ -12,14 +12,16 @@ import { buildMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
 
-type Params = { locale: string } | Promise<{ locale: string }>;
-
 export function generateStaticParams(): Array<{ locale: Locale }> {
   return locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const { locale } = await Promise.resolve(params);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
   if (!isLocale(locale)) return {};
 
   return buildMetadata({
@@ -34,11 +36,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   });
 }
 
-// ✅ CAMBIO: ahora async + unwrap params
-export default async function BlogIndex({ params }: { params: Params }) {
-  const { locale } = await Promise.resolve(params);
+export default async function BlogIndex({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   if (!isLocale(locale)) notFound();
-
   const safeLocale: Locale = locale;
 
   if (!site.features.blog.enabled) notFound();

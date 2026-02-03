@@ -9,10 +9,14 @@ import { HomeServices } from "@/blocks/home/services";
 import { HomeGallery } from "@/blocks/home/gallery";
 import { HomeCta } from "@/blocks/home/cta";
 
-type Params = { locale: string } | Promise<{ locale: string }>;
+type Params = { locale: string };
 
-export default async function HomePage({ params }: { params: Params }) {
-  const { locale } = await Promise.resolve(params);
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
   const safeLocale: Locale = locale;

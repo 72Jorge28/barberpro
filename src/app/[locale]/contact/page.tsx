@@ -10,15 +10,13 @@ import { createT } from "@/i18n/t";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 
-type Params = { locale: string } | Promise<{ locale: string }>;
-
 type SocialId = "whatsapp" | "instagram" | "facebook";
 
 type SocialItem = {
   id: SocialId;
   href: string;
   className: string;
-  labelKey: string; // i18n aria/title
+  labelKey: string;
   icon: (props: { className?: string }) => React.ReactNode;
 };
 
@@ -26,7 +24,6 @@ function cx(...parts: Array<string | undefined | false>) {
   return parts.filter(Boolean).join(" ");
 }
 
-// Minimal inline icons (no extra libs, no sprite dependency)
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className={className} fill="currentColor">
@@ -51,16 +48,19 @@ function FacebookIcon({ className }: { className?: string }) {
   );
 }
 
-export default async function Page({ params }: { params: Params }) {
-  const { locale } = await Promise.resolve(params);
-  if (!isLocale(locale)) notFound();
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
 
+  if (!isLocale(locale)) notFound();
   const safeLocale: Locale = locale;
 
   const messages = await getMessages(safeLocale);
   const t = createT(messages);
 
-  // ✅ hours is structural in site.ts (dayKey/timeKey)
   const hoursText = site.business.hours
     .map((h) => `${t(h.dayKey)}: ${t(h.timeKey)}`)
     .join(" · ");

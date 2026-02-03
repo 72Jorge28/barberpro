@@ -19,9 +19,6 @@ export function Footer({ locale }: { locale: Locale }) {
   const t = useT();
   const year = new Date().getFullYear();
 
-  // // Footer premium: pocos links (si quieres, puedes limitar a 5)
-  // const nav = site.nav.items.slice(0, 5);
-
   return (
     <footer className="relative border-t border-[hsl(var(--border))]">
       {/* background sutil */}
@@ -31,31 +28,29 @@ export function Footer({ locale }: { locale: Locale }) {
       </div>
 
       <Container className="py-8 sm:py-10">
-        {/* Top row */}
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-          {/* Brand + short info */}
+          {/* Brand + info */}
           <div className="max-w-xl">
             <div className="text-sm font-semibold tracking-tight">
               {site.brand.name}
             </div>
-            <p className="mt-2 text-sm text-[hsl(var(--muted-fg))]">
-              {site.brand.slogan}
-            </p>
 
-            {/* Compact contact row */}
+            {/* ✅ slogan traducible */}
+            {site.brand.sloganKey ? (
+              <p className="mt-2 text-sm text-[hsl(var(--muted-fg))]">
+                {t(site.brand.sloganKey)}
+              </p>
+            ) : null}
+
             <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[hsl(var(--muted-fg))]">
-              <span>
-                <span className="opacity-80">{t("footer.phone")}:</span>{" "}
-                <span className="text-[hsl(var(--fg))]">{site.business.phone}</span>
-              </span>
+              <span className="opacity-80">{t("footer.phoneLabel")}</span>
+
               <span className="hidden sm:inline opacity-40">•</span>
-              <span className="truncate">
-                <span className="opacity-80">{t("footer.address")}:</span>{" "}
-                <span className="text-[hsl(var(--fg))]">{site.business.address}</span>
-              </span>
+
+              <span className="opacity-80">{t("footer.addressLabel")}</span>
+
             </div>
 
-            {/* Social quick */}
             <div className="mt-4 flex flex-wrap gap-2">
               <Link
                 href={site.links.instagram}
@@ -81,64 +76,38 @@ export function Footer({ locale }: { locale: Locale }) {
             </div>
           </div>
 
-          {/* Right: links + hours (compact) */}
-          <div className="grid gap-6 sm:grid-cols-2 sm:gap-10">
-            {/* Links */}
-            {/* <div>
-              <div className="text-xs font-medium text-[hsl(var(--fg))]">
-                {t("footer.linksTitle")}
-              </div>
-
-              <nav className="mt-3 grid gap-2 text-sm">
-                {nav.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={withLocale(locale, item.href)}
-                    className={cx(
-                      "transition",
-                      "text-[hsl(var(--muted-fg))] hover:text-[hsl(var(--fg))]",
-                      "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))]"
-                    )}
-                  >
-                    {t(item.labelKey)}
-                  </Link>
-                ))}
-              </nav>
-            </div> */}
-
-            {/* Hours (solo resumen) */}
-            <div>
-              <div className="text-xs font-medium text-[hsl(var(--fg))]">
-                {t("footer.hoursTitle")}
-              </div>
-
-              <ul className="mt-3 space-y-2 text-sm text-[hsl(var(--muted-fg))]">
-                {site.business.hours.slice(0, 3).map((h) => (
-                  <li key={h.day} className="flex items-center justify-between gap-4">
-                    <span className="whitespace-nowrap">{h.day}</span>
-                    <span className="text-[hsl(var(--fg))]">{h.time}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* hint opcional si tienes página contact/booking */}
-              <Link
-                href={withLocale(locale, "/contact")}
-                className={cx(
-                  "mt-3 inline-flex text-xs font-semibold",
-                  "text-[hsl(var(--fg))] hover:opacity-90 transition"
-                )}
-              >
-                {t("footer.contactLink")} <span className="ml-1 opacity-70">→</span>
-              </Link>
+          {/* Hours */}
+          <div>
+            <div className="text-xs font-medium text-[hsl(var(--fg))]">
+              {t("footer.hoursTitle")}
             </div>
+
+            <ul className="mt-3 space-y-2 text-sm text-[hsl(var(--muted-fg))]">
+              {site.business.hours.slice(0, 3).map((h) => (
+                <li
+                  key={h.dayKey} // ✅ limpio y estable con tu config actual
+                  className="flex items-center justify-between gap-4"
+                >
+                  <span className="whitespace-nowrap">{t(h.dayKey)}</span>
+                  <span className="text-[hsl(var(--fg))]">{t(h.timeKey)}</span>
+                </li>
+              ))}
+            </ul>
+
+            <Link
+              href={withLocale(locale, "/contact")}
+              className={cx(
+                "mt-3 inline-flex text-xs font-semibold transition",
+                "text-[hsl(var(--fg))] hover:opacity-90"
+              )}
+            >
+              {t("footer.contactLink")} <span className="ml-1 opacity-70">→</span>
+            </Link>
           </div>
         </div>
 
-        {/* Divider */}
         <div className="my-6 h-px w-full bg-[hsl(var(--border))]" />
 
-        {/* Bottom row */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-xs text-[hsl(var(--muted-fg))]">
             © {year} {site.brand.name}. {t("footer.rights")}
@@ -154,6 +123,7 @@ export function Footer({ locale }: { locale: Locale }) {
             >
               {t("footer.privacy")}
             </Link>
+
             <Link
               href={withLocale(locale, "/legal/terms")}
               className={cx(

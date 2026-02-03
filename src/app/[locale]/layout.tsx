@@ -1,28 +1,25 @@
 // src/app/[locale]/layout.tsx
 import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
-
 import { isLocale, type Locale } from "@/i18n/locales";
 import { getMessages } from "@/i18n/getMessages";
 import { I18nProvider } from "@/i18n/provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 
-type LayoutParams = { locale: string } | Promise<{ locale: string }>;
+type Params = { locale: string };
 
 export default async function LocaleLayout({
   children,
   params,
 }: {
-  children: ReactNode;
-  params: LayoutParams;
+  children: React.ReactNode;
+  params: Promise<Params>;
 }) {
-  // ✅ Works whether params is object or Promise
-  const { locale } = await Promise.resolve(params);
+  const { locale } = await params;
 
   if (!isLocale(locale)) notFound();
-  const safeLocale: Locale = locale;
 
+  const safeLocale: Locale = locale;
   const messages = await getMessages(safeLocale);
 
   return (

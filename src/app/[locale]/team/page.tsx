@@ -8,10 +8,14 @@ import { TeamHero } from "@/blocks/team/hero";
 import { TeamValues } from "@/blocks/team/values";
 import { TeamMembers } from "@/blocks/team/members";
 
-type Params = { locale: string } | Promise<{ locale: string }>;
+type Params = { locale: string };
 
-export default async function Page({ params }: { params: Params }) {
-  const { locale } = await Promise.resolve(params);
+export default async function Page({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
   const safeLocale: Locale = locale;

@@ -1,5 +1,6 @@
-import { isLocale, type Locale } from "@/i18n/locales";
+import { Locale, locales } from "./locales";
 
-export function toSafeLocale(input: unknown): Locale {
-  return isLocale(input) ? input : "es";
+// src/i18n/locales.ts
+export function isLocale(v: unknown): v is Locale {
+  return typeof v === "string" && locales.includes(v as Locale);
 }

@@ -9,10 +9,14 @@ import { ServicesCategories } from "@/blocks/services/categories";
 import { ServicesFaq } from "@/blocks/services/faq";
 import { ServicesCta } from "@/blocks/services/cta";
 
-type Params = { locale: string } | Promise<{ locale: string }>;
+type Params = { locale: string };
 
-export default async function ServicesPage({ params }: { params: Params }) {
-  const { locale } = await Promise.resolve(params);
+export default async function ServicesPage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
   const safeLocale: Locale = locale;

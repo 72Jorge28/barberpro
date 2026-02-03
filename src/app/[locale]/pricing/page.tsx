@@ -10,7 +10,7 @@ import { Section } from "@/components/layout/section";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-type Params = { locale: string } | Promise<{ locale: string }>;
+type Params = { locale: string };
 
 function cx(...parts: Array<string | undefined | false>) {
   return parts.filter(Boolean).join(" ");
@@ -35,10 +35,7 @@ function Check() {
   );
 }
 
-type TFunction = (
-  key: string,
-  vars?: Record<string, string | number>,
-) => string;
+type TFunction = (key: string, vars?: Record<string, string | number>) => string;
 
 function safeText(v: string, key: string) {
   if (!v) return "";
@@ -91,9 +88,7 @@ function PriceCard({
     safeText(t(ctaSecondaryKey), ctaSecondaryKey) || t("pricing.cta.secondary");
 
   const primaryHref =
-    site.features?.booking?.mode === "calendly"
-      ? site.links.calendly
-      : `/${locale}/booking`;
+    site.features?.booking?.mode === "calendly" ? site.links.calendly : `/${locale}/booking`;
 
   return (
     <Card
@@ -101,7 +96,7 @@ function PriceCard({
         "relative overflow-hidden p-6 sm:p-7",
         "border border-[hsl(var(--border))]",
         "shadow-[var(--shadow-sm)]",
-        featured && "ring-1 ring-[hsl(var(--ring))]/40",
+        featured && "ring-1 ring-[hsl(var(--ring))]/40"
       )}
     >
       <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[hsl(var(--ring))]/10 blur-3xl" />
@@ -115,9 +110,7 @@ function PriceCard({
               {title}
             </h3>
             {subtitle ? (
-              <p className="mt-2 text-sm text-[hsl(var(--muted-fg))]">
-                {subtitle}
-              </p>
+              <p className="mt-2 text-sm text-[hsl(var(--muted-fg))]">{subtitle}</p>
             ) : null}
           </div>
 
@@ -125,7 +118,7 @@ function PriceCard({
             <span
               className={cx(
                 "shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold",
-                "border border-[hsl(var(--border))] bg-[hsl(var(--muted))] text-[hsl(var(--fg))]",
+                "border border-[hsl(var(--border))] bg-[hsl(var(--muted))] text-[hsl(var(--fg))]"
               )}
             >
               {badge}
@@ -137,9 +130,7 @@ function PriceCard({
           <div className="text-3xl font-bold tracking-tight text-[hsl(var(--fg))]">
             {price || t("pricing.planFallback.price")}
           </div>
-          {period ? (
-            <div className="text-sm text-[hsl(var(--muted-fg))]">{period}</div>
-          ) : null}
+          {period ? <div className="text-sm text-[hsl(var(--muted-fg))]">{period}</div> : null}
         </div>
 
         {features.length ? (
@@ -160,11 +151,7 @@ function PriceCard({
         )}
 
         <div className="mt-7 grid gap-3 sm:grid-cols-2">
-          <Button
-            href={primaryHref}
-            variant={featured ? "primary" : "secondary"}
-            className="w-full"
-          >
+          <Button href={primaryHref} variant={featured ? "primary" : "secondary"} className="w-full">
             {primaryLabel}
           </Button>
 
@@ -173,73 +160,32 @@ function PriceCard({
           </Button>
         </div>
 
-        <p className="mt-4 text-xs text-[hsl(var(--muted-fg))]">
-          {t("pricing.disclaimer")}
-        </p>
+        <p className="mt-4 text-xs text-[hsl(var(--muted-fg))]">{t("pricing.disclaimer")}</p>
       </div>
     </Card>
   );
 }
 
-function FAQItem({ q, a }: { q: string; a: string }) {
-  return (
-    <details
-      className={cx(
-        "group rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]",
-        "shadow-[var(--shadow-sm)] open:shadow-[var(--shadow-md)]",
-        "transition",
-      )}
-    >
-      <summary className="cursor-pointer list-none px-5 py-4">
-        <div className="flex items-start justify-between gap-4">
-          <span className="text-sm font-semibold text-[hsl(var(--fg))]">
-            {q}
-          </span>
-          <span
-            aria-hidden="true"
-            className={cx(
-              "mt-0.5 grid h-8 w-8 place-items-center rounded-full",
-              "border border-[hsl(var(--border))] bg-[hsl(var(--muted))]",
-              "text-[hsl(var(--muted-fg))] transition",
-              "group-open:rotate-45",
-            )}
-          >
-            +
-          </span>
-        </div>
-      </summary>
-      <div className="px-5 pb-5 text-sm leading-relaxed text-[hsl(var(--muted-fg))]">
-        {a}
-      </div>
-    </details>
-  );
-}
-
-export default async function Page({ params }: { params: Params }) {
-  const { locale } = await Promise.resolve(params);
+export default async function Page({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
   const safeLocale: Locale = locale;
-
   const messages = await getMessages(safeLocale);
   const t = createT(messages);
 
   const plans = [0, 1, 2] as const;
-
   const included = readList(t, "pricing.included", 6);
-  const faqQ = readList(t, "pricing.faq.items.q", 4);
-  const faqA = readList(t, "pricing.faq.items.a", 4);
 
   return (
     <main>
-      <Section
-        title={t("pricing.page.title")}
-        subtitle={t("pricing.page.subtitle")}
-      >
+      <Section title={t("pricing.page.title")} subtitle={t("pricing.page.subtitle")}>
         <Card className="p-6">
-          <p className="text-sm text-[hsl(var(--muted-fg))]">
-            {t("pricing.page.note")}
-          </p>
+          <p className="text-sm text-[hsl(var(--muted-fg))]">{t("pricing.page.note")}</p>
         </Card>
 
         <div className="mt-6 grid gap-4 lg:grid-cols-3">
@@ -255,42 +201,20 @@ export default async function Page({ params }: { params: Params }) {
         </div>
       </Section>
 
-      <Section
-        title={t("pricing.includedTitle")}
-        subtitle={t("pricing.includedSubtitle")}
-      >
+      <Section title={t("pricing.includedTitle")} subtitle={t("pricing.includedSubtitle")}>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {(included.length ? included : [t("pricing.includedFallback")]).map(
-            (item, idx) => (
-              <Card key={`included-${idx}`} className="p-5">
-                <div className="flex gap-2">
-                  <span className="mt-0.5">
-                    <Check />
-                  </span>
-                  <p className="text-sm text-[hsl(var(--muted-fg))]">{item}</p>
-                </div>
-              </Card>
-            ),
-          )}
+          {(included.length ? included : [t("pricing.includedFallback")]).map((item, idx) => (
+            <Card key={`included-${idx}`} className="p-5">
+              <div className="flex gap-2">
+                <span className="mt-0.5">
+                  <Check />
+                </span>
+                <p className="text-sm text-[hsl(var(--muted-fg))]">{item}</p>
+              </div>
+            </Card>
+          ))}
         </div>
       </Section>
-
-      {/* <Section
-        title={t("pricing.faq.title")}
-        subtitle={t("pricing.faq.subtitle")}
-      >
-        <div className="grid gap-3 lg:grid-cols-2">
-          {faqItems.map((it, i) => (
-            <FAQItem key={`faq-${i}`} q={it.q} a={it.a} />
-          ))}
-
-          <Card className="p-6">
-            <p className="text-sm text-[hsl(var(--muted-fg))]">
-              {t("pricing.faqFallback")}
-            </p>
-          </Card>
-        </div>
-      </Section> */}
     </main>
   );
 }

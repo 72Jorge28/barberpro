@@ -31,6 +31,13 @@
   "footer.privacy": "Privacy",
   "footer.terms": "Terms",
 
+  "hours.mon_fri": "Mon–Fri",
+  "hours.mon_fri_time": "9:00–19:00",
+  "hours.sat": "Saturday",
+  "hours.sat_time": "10:00–16:00",
+  "hours.sun": "Sunday",
+  "hours.closed": "Closed",
+
   "home.hero.imageAlt": "BarberPro cover",
   "home.hero.badge": "Quick booking • Premium style",
   "home.hero.kicker": "Modern barbershop",

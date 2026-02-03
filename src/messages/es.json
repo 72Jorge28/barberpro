@@ -14,6 +14,7 @@
   "nav.mobile.open": "Abrir menú",
   "nav.mobile.close": "Cerrar menú",
   "nav.cta.whatsappMessage": "Hola, me gustaría reservar una cita en BarberPro.",
+
   "common.openMenu": "Abrir menú",
   "common.closeMenu": "Cerrar menú",
   "common.loading": "Cargando...",
@@ -30,6 +31,13 @@
   "footer.rights": "Todos los derechos reservados.",
   "footer.privacy": "Privacidad",
   "footer.terms": "Términos",
+
+  "hours.mon_fri": "Lun–Vie",
+  "hours.mon_fri_time": "9:00–19:00",
+  "hours.sat": "Sábado",
+  "hours.sat_time": "10:00–16:00",
+  "hours.sun": "Domingo",
+  "hours.closed": "Cerrado",
 
   "home.hero.imageAlt": "Portada de BarberPro",
   "home.hero.badge": "Agenda rápida • Estilo premium",

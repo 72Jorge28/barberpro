@@ -9,16 +9,8 @@ import { createT } from "@/i18n/t";
 
 import { Section } from "@/components/layout/section";
 import { Card } from "@/components/ui/card";
-// import { OrnamentMask } from "@/components/ornaments/ornament-mask";
 
-// import { CornerOrnament01 } from "@/components/ornaments/corner-01";
-// import { CornerOrnament02 } from "@/components/ornaments/corner-02";
-// import { FlourishOrnament01 } from "@/components/ornaments/flourish-01";
-// import { OrnCornerA } from "@/components/ornaments/orn-corner-a";
-// import { OrnFlourishA } from "@/components/ornaments/orn-flourish-a";
-// import { OrnDividerA } from "@/components/ornaments/orn-divider-a";
-
-type Params = { locale: string } | Promise<{ locale: string }>;
+type Params = { locale: string };
 
 type GalleryItem = {
   src: string;
@@ -36,23 +28,20 @@ function getGalleryItems(gallery: GalleryConfig): readonly GalleryItem[] {
   return gallery.items ?? [];
 }
 
-export default async function Page({ params }: { params: Params }) {
-  const { locale } = await Promise.resolve(params);
+export default async function Page({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
   const safeLocale: Locale = locale;
-
   const messages = await getMessages(safeLocale);
   const t = createT(messages);
 
   const gallery = site.media.gallery as unknown as GalleryConfig;
   const items = getGalleryItems(gallery);
-
-  // const ORN = {
-  //   cornerA: "/ornaments/corner-01.svg",
-  //   cornerB: "/ornaments/corner-02.svg",
-  //   flourish: "/ornaments/flourish-01.svg",
-  // } as const;
 
   return (
     <main>
@@ -60,8 +49,6 @@ export default async function Page({ params }: { params: Params }) {
         <Card className="p-6">
           <p className="text-sm text-[hsl(var(--muted-fg))]">{t("gallery.page.note")}</p>
         </Card>
-
-        {/* (tu bloque de ornamentos no lo toqué; está bien) */}
 
         {items.length ? (
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -88,14 +75,6 @@ export default async function Page({ params }: { params: Params }) {
                       className="object-cover"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/0 via-black/0 to-black/35" />
-
-                    {/* <div className="absolute inset-0 text-white">
-                      <OrnamentMask
-                        src={ORN.cornerA}
-                        className="left-[-20px] top-[-20px] h-32 w-32"
-                        style={{ opacity: 0.35 }}
-                      />
-                    </div> */}
                   </div>
 
                   <div className="relative p-5">
